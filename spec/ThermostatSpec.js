@@ -21,6 +21,10 @@ describe("Thermostat", function() {
     it("should start with a maximum temperature of 25 degrees due to power saving mode being on", function() {
       expect(thermostat._maxTemp).toEqual(25);
     });
+
+    it("should start with energy usage level set to `Medium`", function() {
+      expect(thermostat._energyUsage).toEqual('Medium');
+    });
   });
 
   describe("General functionality", function() {
@@ -61,6 +65,14 @@ describe("Thermostat", function() {
       thermostat._setMaxtemp();
       thermostat._temperature = 32;
       expect(function() { thermostat.increase() }).toThrowError('Max temp reached');
+    });
+  });
+
+  describe("Energy usage levels", function() {
+    it("should set energy usage level to low if temperature is less than 18 degrees", function() {
+      thermostat._temperature = 17;
+      thermostat.checkEnergyUsage()
+      expect(thermostat._energyUsage).toEqual('Low');
     });
   });
 });
