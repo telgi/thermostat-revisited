@@ -24,16 +24,18 @@ Thermostat.prototype.decrease = function () {
 
 Thermostat.prototype.setPowerSavingMode = function () {
   this._powerSavingMode = !this._powerSavingMode;
+  this._setMaxtemp();
 };
 
 Thermostat.prototype.resetTemp = function () {
   this._temperature = 20;
-  this._setMaxtemp();
 };
 
 Thermostat.prototype.checkEnergyUsage = function () {
   if (this._temperature < 18) {
     this._energyUsage = 'Low';
+  } else if (this._temperature > 25) {
+    this._energyUsage = 'High';
   } else {
     this._energyUsage = 'Medium';
   }
