@@ -33,6 +33,12 @@ describe("Thermostat", function() {
       thermostat._temperature = thermostat._minTemp;
       expect(function() { thermostat.decrease() }).toThrowError('Min temp is 10 degrees');
     });
+
+    it("should be able to turn power saving mode off", function() {
+      thermostat._powerSavingMode = true;
+      thermostat.setPowerSavingMode();
+      expect(thermostat._powerSavingMode).toEqual(false);
+    });
   });
 
   describe("When power saving mode is on", function() {
