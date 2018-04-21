@@ -5,10 +5,6 @@ function Thermostat() {
   this._maxTemp = 25;
 }
 
-Thermostat.prototype.temperature = function () {
-  return this._temperature;
-};
-
 Thermostat.prototype.increase = function () {
   if (this._temperature === this._maxTemp) {
     throw new Error('Max temp reached');
