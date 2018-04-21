@@ -7,11 +7,11 @@ describe("Thermostat", function() {
 
   describe("When a new thermostat is created", function() {
     it("should start with a temperature of 20 degrees", function() {
-      expect(thermostat._temperature).toEqual(20);
+      expect(thermostat.temperature).toEqual(20);
     });
 
     it("should have a minimum temperature of 10 degrees", function() {
-      expect(thermostat._minTemp).toEqual(10);
+      expect(thermostat._MIN_TEMP).toEqual(10);
     });
 
     it("should start with power saving mode on", function() {
@@ -28,30 +28,36 @@ describe("Thermostat", function() {
   });
 
   describe("General functionality", function() {
-    it("should decrease the current temperature by 1", function() {
-      thermostat.decrease();
-      expect(thermostat._temperature).toEqual(19);
+    it("should down the current temperature by 1", function() {
+      thermostat.down();
+      expect(thermostat.getCurrentTemp()).toEqual(19);
     });
 
     it("should not decrease temperature if current temperature is 10 degrees", function() {
-      thermostat._temperature = thermostat._minTemp;
-      expect(function() { thermostat.decrease() }).toThrowError('Min temp is 10 degrees');
+      for (var i = 0; i < 11; i++) {
+        thermostat.down();
+      }
+      expect(thermostat.getCurrentTemp()).toEqual(10);
     });
 
     it("should be able to reset temperature to 20 degrees", function() {
-      thermostat._temperature = 27;
+      thermostat.up();
       thermostat.resetTemp();
-      expect(thermostat._temperature).toEqual(20)
+      expect(thermostat.getCurrentTemp()).toEqual(20)
     });
 
     it("should set energy usage level to `Low` if temperature is less than 18 degrees", function() {
-      thermostat._temperature = 17;
+      for (var i = 0; i < 3; i++) {
+        thermostat.down();
+      }
       thermostat.checkEnergyUsage()
       expect(thermostat._energyUsage).toEqual('Low');
     });
 
     it("should set energy usage level to `Medium` if temperature is between 18 and 25 degrees", function() {
-      thermostat._temperature = 22;
+      for (var i = 0; i < 3; i++) {
+        thermostat.up();
+      }
       thermostat.checkEnergyUsage()
       expect(thermostat._energyUsage).toEqual('Medium');
     });
@@ -63,8 +69,10 @@ describe("Thermostat", function() {
     });
 
     it("should not increase temperature if current temperature is 25 degrees", function() {
-      thermostat._temperature = 25;
-      expect(function() { thermostat.increase() }).toThrowError('Max temp reached');
+      for (var i = 0; i < 6; i++) {
+        thermostat.up();
+      }
+      expect(thermostat.getCurrentTemp()).toEqual(25)
     });
 
     it("should be able to turn power saving mode off", function() {
@@ -79,12 +87,16 @@ describe("Thermostat", function() {
     });
 
     it("should not increase temperature if current temperature is 32 degrees", function() {
-      thermostat._temperature = 32;
-      expect(function() { thermostat.increase() }).toThrowError('Max temp reached');
+      for (var i = 0; i < 13; i++) {
+        thermostat.up();
+      }
+      expect(thermostat.getCurrentTemp()).toEqual(32)
     });
 
     it("should set energy usage level to `High` if temperature is greater than 25 degrees", function() {
-      thermostat._temperature = 29;
+      for (var i = 0; i < 7; i++) {
+        thermostat.up();
+      }
       thermostat.checkEnergyUsage();
       expect(thermostat._energyUsage).toEqual('High');
     });

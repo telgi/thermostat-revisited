@@ -1,24 +1,31 @@
 function Thermostat() {
-  this._temperature = 20;
-  this._minTemp = 10;
+  this._DEFAULT_TEMP = 20;
+  this._MIN_TEMP = 10;
+  this._MEDIUM_ENERGY_USAGE_MIN = 18;
+  this._MEDIUM_ENERGY_USAGE_MAX = 25;
+  this.temperature = this._DEFAULT_TEMP;
   this._powerSavingMode = true;
   this._maxTemp = 25;
   this._energyUsage = 'Medium';
 }
 
-Thermostat.prototype.increase = function () {
-  if (this._temperature === this._maxTemp) {
-    throw new Error('Max temp reached');
+Thermostat.prototype.getCurrentTemp = function () {
+  return this.temperature;
+};
+
+Thermostat.prototype.up = function () {
+  if (this._isMaxTemp()) {
+    return;
   } else {
-    this._temperature++;
+    this.temperature++;
   }
 };
 
-Thermostat.prototype.decrease = function () {
-  if (this._temperature === this._minTemp) {
-    throw new Error('Min temp is 10 degrees')
+Thermostat.prototype.down = function () {
+  if (this._isMinTemp()) {
+    return;
   } else {
-    this._temperature--;
+    this.temperature--;
   }
 };
 
@@ -28,17 +35,25 @@ Thermostat.prototype.setPowerSavingMode = function () {
 };
 
 Thermostat.prototype.resetTemp = function () {
-  this._temperature = 20;
+  this.temperature = this._DEFAULT_TEMP;
 };
 
 Thermostat.prototype.checkEnergyUsage = function () {
-  if (this._temperature < 18) {
+  if (this.temperature < this._MEDIUM_ENERGY_USAGE_MIN) {
     this._energyUsage = 'Low';
-  } else if (this._temperature > 25) {
+  } else if (this.temperature > this._MEDIUM_ENERGY_USAGE_MAX) {
     this._energyUsage = 'High';
   } else {
     this._energyUsage = 'Medium';
   }
+};
+
+Thermostat.prototype._isMaxTemp = function () {
+  return (this.temperature === this._maxTemp)
+};
+
+Thermostat.prototype._isMinTemp = function () {
+  return (this.temperature === this._MIN_TEMP)
 };
 
 Thermostat.prototype._setMaxtemp = function () {
