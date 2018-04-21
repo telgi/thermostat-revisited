@@ -61,9 +61,9 @@ I want the different levels of usage to have semantically appropriate colours.
 ## Specification
 
 * Thermostat starts at 20 degrees [x]
-* You can increase the temperature with an up function []
-* You can decrease the temperature with a down function []
-* The minimum temperature is 10 degrees []
+* You can increase the temperature with an up function [x]
+* You can decrease the temperature with a down function [x]
+* The minimum temperature is 10 degrees [x]
 * If power saving mode is on, the maximum temperature is 25 degrees []
 * If power saving mode is off, the maximum temperature is 32 degrees []
 * Power saving mode is on by default []
