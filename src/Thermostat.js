@@ -7,7 +7,11 @@ Thermostat.prototype.temperature = function () {
 };
 
 Thermostat.prototype.increase = function () {
-  this._temperature++;
+  if (this._maxtemp()) {
+    throw new Error('Max temp is 32 degrees');
+  } else {
+    this._temperature++;
+  }
 };
 
 Thermostat.prototype.decrease = function () {
@@ -20,4 +24,8 @@ Thermostat.prototype.decrease = function () {
 
 Thermostat.prototype._minTemp = function () {
   return (this._temperature === 10);
+};
+
+Thermostat.prototype._maxtemp = function () {
+  return (this._temperature === 32);
 };
