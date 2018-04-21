@@ -9,19 +9,25 @@ describe("Thermostat", function() {
     expect(thermostat.temperature()).toEqual(20);
   });
 
-  describe("Increasing temperature", function() {
-    it("should increase the current temperature by 1", function() {
-      thermostat.increase();
-      expect(thermostat.temperature()).toEqual(21);
-    });
-
-    it("should not increase temperature if current temperature is 32 degrees", function() {
-      thermostat._temperature = 32;
-      expect(function() { thermostat.increase() }).toThrowError('Max temp is 32 degrees');
+  describe("When power saving mode is on", function() {
+    it("should not increase temperature if current temperature is 25 degrees", function() {
+      thermostat._powerSavingMode = true;
+      thermostat._temperature = 25;
+      expect(function() { thermostat.increase() }).toThrowError('Max temp reached');
     });
   });
 
-  describe("Decreasing temperature", function() {
+  describe("When power saving mode is off", function() {
+    beforeEach(function() {
+      thermostat._powerSavingMode = false;
+    });
+
+    it("should not increase temperature if current temperature is 32 degrees", function() {
+      thermostat._setMaxtemp();
+      thermostat._temperature = 32;
+      expect(function() { thermostat.increase() }).toThrowError('Max temp reached');
+    });
+
     it("should decrease the current temperature by 1", function() {
       thermostat.decrease();
       expect(thermostat.temperature()).toEqual(19);
