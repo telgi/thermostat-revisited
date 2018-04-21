@@ -28,7 +28,7 @@ describe("Thermostat", function() {
     });
 
     it("should not decrease temperature if current temperature is 10 degrees", function() {
-      thermostat._temperature = 10;
+      thermostat._temperature = thermostat._minTemp;
       expect(function() { thermostat.decrease() }).toThrowError('Min temp is 10 degrees');
     });
   });
