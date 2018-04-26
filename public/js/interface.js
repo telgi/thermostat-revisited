@@ -12,4 +12,13 @@ $(document).ready(function() {
     thermostat.down();
     $("#temp").text(thermostat.temperature);
   });
+
+  $("#power-mode").click(function() {
+    thermostat.setPowerSavingMode();
+    if (thermostat._powerSavingMode === false) {
+      $("#power-mode").text("Off")
+    } else {
+      $("#power-mode").text("On")
+    }
+  })
 });
