@@ -6,13 +6,33 @@ Test driven development of a simple thermostat model.
 
 To practice using TDD with Jasmine and building logic with JavaScript.
 
+To also practice using BDD with Cypress and building interface with JQuery.
+
 ## Installation
 
 `git clone git@github.com:telgi/thermostat-revisited.git`
 
+Run `open index.html` to launch web application
+
+*OR*
+
+Run `open SpecRunner.html` and use developer tools to play with thermostat object e.g.
+
+```
+var thermostat = new Thermostat();
+
+thermostat.temperature => 20
+
+thermostat.up();
+
+thermostat.temperature => 21
+```
+
 ## Testing
 
-Run `open SpecRunner.html` to launch Jasmine test suite
+Run `open SpecRunner.html` to launch Jasmine test suite and see unit tests
+
+Run `npx cypress open` to launch Cypress test suite and see feature tests
 
 ## User Stories
 
